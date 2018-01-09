@@ -6,14 +6,30 @@ CREATE KEYSPACE uber_pickup_data WITH REPLICATION = { 'class' : 'SimpleStrategy'
 use uber_pickup_data;
 
 
+CREATE TABLE sensors (
+   customerid int,
+   sensorid int,
+   changedate timestamp,
+   value text,
+   PRIMARY KEY (customerid, changedate)
+) WITH CLUSTERING ORDER BY (changedate DESC);
+
 CREATE TABLE raw_uber_hourly_data (
-   dt timestamp,      // date timestamp
-   lat double,       // latitude
-   lon double,       // longtitue
-   base text,        // base
-   PRIMARY KEY (dt, lat, lon, base)
-)
-WITH CLUSTERING ORDER BY (lat DESC, lon DESC, base DESC);
+   lat double,
+   lon double,
+   base text,
+   dt timestamp,
+PRIMARY KEY (base, dt)
+) WITH CLUSTERING ORDER BY (dt DESC);
+
+//CREATE TABLE raw_uber_hourly_data (
+//   dt timestamp,
+//   lat double,
+//   lon double,
+//   base text,
+//   PRIMARY KEY (dt)
+//)
+//WITH CLUSTERING ORDER BY (dt DESC);
 
 CREATE TABLE daily_aggregate_kmean_prediction (
    day int,

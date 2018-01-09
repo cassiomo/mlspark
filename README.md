@@ -5,7 +5,7 @@
 bin/zkServer.sh start conf/zoo_sample.cfg 
 bin/kafka-server-start.sh config/server.properties
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic raw_uber_pickup
-bin/cqlsh < uber.csv
+bin/cqlsh < create-uberseries.cql
 bin/cassandra
 
 

@@ -1,0 +1,61 @@
+Modify a file with sed
+
+$ sed "s/<string to replace>/<string to replace it with>/g" <source_file> > <target_file>.
+
+e.g
+
+sed "s/, ?,/,,/g" adult.csv >  adult.csv
+
+Subset a large file
+
+head -n <total_lines> <source_file> | tail -n <number_of_lines> > <target_file>
+
+e.g
+
+head -n 120 adult.csv | tail -n 20 > adult_sample.csv
+
+Finding duplicates with uniq
+
+uniq -c: which adds the repetition count to each line;
+uniq -d: which only outputs duplicate lines; And
+uniq -u: which only outputs unique lines.
+
+counts number of duplicated line
+
+e.g
+
+$ sort adult.csv | uniq -d | wc -l
+23
+
+shows duplicates
+
+e.g
+
+sort adult.csv | uniq -c | sort -r | head -n 3
+3 25, Private, 195994, 1st-4th, 2, Never-married, ...
+2 90, Private, 52386, Some-college, 10, Never-married, ...
+2 49, Self-emp-not-inc, 43479, Some-college, 10, Married-civ-spouse, ...
+
+Selecting columns with cut
+
+select the column workclass and pipe to head to verify that you have the right column:
+
+$ cut -d "," -f 2 adult.csv | head -3
+workclass
+State-gov
+Self-emp-not-inc
+
+count uniques, you sort the output of cut and pipe the result to uniq -c, as such
+
+$  cut -d "," -f 2 adult.csv | sort | uniq -c
+1837
+ 960  Federal-gov
+2093  Local-gov
+   7  Never-worked
+22696  Private
+1116  Self-emp-inc
+2541  Self-emp-not-inc
+1298  State-gov
+  14  Without-pay
+   1 workclass
+
